@@ -1,21 +1,27 @@
 package by.andrus.askit.dto;
 
 import by.andrus.askit.model.User;
-import by.andrus.askit.model.enums.Role;
+import by.andrus.askit.model.enums.Roles;
 import by.andrus.askit.model.enums.Status;
-import lombok.Data;
 
 import java.util.UUID;
 
-@Data
 public class AuthRequestDto {
-    private String nickname;
+    public String nickname;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public User toUser() {
         User user = new User();
         user.setNickname(nickname == null ? "Anonymous" : nickname);
         user.setJwtSecret(UUID.randomUUID());
-        user.setRole(Role.USER);
+        user.setRole(Roles.ROLE_USER);
         user.setStatus(Status.ACTIVE);
         return user;
     }

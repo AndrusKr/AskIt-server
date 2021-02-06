@@ -1,10 +1,8 @@
 package by.andrus.askit.security.jwt;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
-@Getter
 public class JwtAuthenticationException extends AuthenticationException {
     private HttpStatus httpStatus;
 
@@ -15,5 +13,9 @@ public class JwtAuthenticationException extends AuthenticationException {
     public JwtAuthenticationException(String msg, HttpStatus httpStatus) {
         super(msg);
         this.httpStatus = httpStatus;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 }

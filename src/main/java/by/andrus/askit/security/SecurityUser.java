@@ -1,7 +1,6 @@
 package by.andrus.askit.security;
 
-import by.andrus.askit.model.enums.Role;
-import lombok.Data;
+import by.andrus.askit.model.enums.Roles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +9,6 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
 public class SecurityUser implements UserDetails {
     private final String username;
     private final String nickname;
@@ -18,12 +16,12 @@ public class SecurityUser implements UserDetails {
     private final Set<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public SecurityUser(Long id, String nickname, UUID jwtSecret, Role role, boolean isActive) {
+    public SecurityUser(Long id, String nickname, UUID jwtSecret, Roles roles, boolean isActive) {
         this.username = id.toString();
         this.nickname = nickname;
         this.password = jwtSecret.toString();
-        this.authorities = role.getAuthorities();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        this.authorities = roles.getAuthorities();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + roles.name()));
         this.isActive = isActive;
     }
 
@@ -49,6 +47,14 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+        return isActive;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public boolean isActive() {
         return isActive;
     }
 

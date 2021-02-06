@@ -1,5 +1,7 @@
 package by.andrus.askit.security.jwt;
 
+//import by.andrus.askit.config.HttpSecurityConfig;
+
 import by.andrus.askit.config.SecurityConfig;
 import by.andrus.askit.model.User;
 import by.andrus.askit.service.UserService;
@@ -30,8 +32,8 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        return pathMatcher.match(SecurityConfig.SIGNIN_ENDPOINT, request.getServletPath());
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return pathMatcher.match(SecurityConfig.SIGNUP_ENDPOINT, request.getServletPath());
     }
 
     @Override

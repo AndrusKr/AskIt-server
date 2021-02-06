@@ -6,11 +6,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-// ToDo QuestionService
 @Service
 public class QuestionService {
 
-    public QuestionDto create(Question question) {
+    public QuestionDto create(Question incomingQuestion) {
         return null;
     }
 
@@ -18,7 +17,7 @@ public class QuestionService {
         return null;
     }
 
-    public Long update(Question question) {
+    public Long update(Question incomingQuestion) {
         return null;
     }
 

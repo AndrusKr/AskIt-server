@@ -8,16 +8,12 @@ import com.google.common.io.BaseEncoding;
 import io.jsonwebtoken.*;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class JwtProvider {
@@ -35,8 +31,8 @@ public class JwtProvider {
     }
 
     public String resolveJwt(HttpServletRequest request) {
-        StompHeaderAccessor accessor = StompHeaderAccessor.wrap((Message<?>) request);
-        List tokenList = accessor.getNativeHeader("Authorization");
+//        StompHeaderAccessor accessor = StompHeaderAccessor.wrap((Message<?>) request);
+//        List tokenList = accessor.getNativeHeader("Authorization");
         String jws = request.getHeader(HEADER_STRING);
         return Strings.isNullOrEmpty(jws) || !jws.startsWith(TOKEN_PREFIX) ? null
                 : jws.replace(TOKEN_PREFIX, "");
