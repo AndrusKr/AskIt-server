@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:12
+    volumes:
+      - "../docker/postgres/db-data:/var/lib/postgresql/data"
+    ports:
+      - 6000:5432
+    restart: always
+    environment:
+      POSTGRES_DB: askit-db
+      POSTGRES_USER: andrus
+      POSTGRES_PASSWORD: andrus
