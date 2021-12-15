@@ -6,8 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public enum Roles {
-    ROLE_USER(Set.of(Permission.OWN_QUESTIONS_CREATE, Permission.ALL_QUESTIONS_READ)),
-    ROLE_ADMIN(Set.of(Permission.OWN_QUESTIONS_CREATE, Permission.ALL_QUESTIONS_READ,
+    USER(Set.of(Permission.OWN_QUESTIONS_CREATE, Permission.ALL_QUESTIONS_READ)),
+    ADMIN(Set.of(Permission.OWN_QUESTIONS_CREATE, Permission.ALL_QUESTIONS_READ,
             Permission.ALL_QUESTIONS_UPDATE, Permission.ALL_QUESTIONS_DELETE));
 
     private final Set<Permission> permissions;

@@ -36,11 +36,13 @@ public class AuthController {
     @PostMapping("sign-up")
     public ResponseEntity<AuthResponseDto> signUp(@RequestBody AuthRequestDto authRequestDto) {
         User user = userService.create(authRequestDto.toUser());
+        System.out.println("user-print " + user);
         String jwt = jwtProvider.createJwt(user);
+        System.out.println("jwt-print " + jwt);
         return ResponseEntity.ok(new AuthResponseDto(user.getId(), user.getNickname(), jwt));
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("user")
     public ResponseEntity<Map<Object, Object>> user() {
         var principal = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -50,7 +52,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("sign-out")
     public void signOut(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();

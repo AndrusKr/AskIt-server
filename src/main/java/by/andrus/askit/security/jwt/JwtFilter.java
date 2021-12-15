@@ -1,12 +1,8 @@
 package by.andrus.askit.security.jwt;
 
-//import by.andrus.askit.config.HttpSecurityConfig;
-
-import by.andrus.askit.config.SecurityConfig;
-import by.andrus.askit.model.User;
+import by.andrus.askit.config.WebSecurityConfig;
 import by.andrus.askit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
@@ -33,21 +29,19 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return pathMatcher.match(SecurityConfig.SIGNUP_ENDPOINT, request.getServletPath());
+        return pathMatcher.match(WebSecurityConfig.SIGNUP_ENDPOINT, request.getServletPath()) || pathMatcher.match("/stomp", request.getServletPath());
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        String jwt = jwtProvider.resolveJwt(request);
         try {
-            User claimingUser = userService.getById(jwtProvider.getUserId(jwt));
-            if (jwt != null && jwtProvider.validateJwt(jwt, claimingUser)) {
-                Authentication authentication = jwtProvider.getAuthentication(claimingUser);
-                if (authentication != null) {
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
-            }
+            jwtProvider.resolveJwt(request).ifPresent(jwt ->
+                    userService.getById(jwtProvider.getUserId(jwt))
+                            .filter(user -> jwtProvider.validateJwt(jwt, user))
+                            .map(jwtProvider::getAuthentication)
+                            .ifPresent(auth -> SecurityContextHolder.getContext().setAuthentication(auth))
+            );
         } catch (JwtAuthenticationException e) {
             SecurityContextHolder.clearContext();
             response.sendError(e.getHttpStatus().value());

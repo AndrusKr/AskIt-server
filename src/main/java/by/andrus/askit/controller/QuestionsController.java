@@ -1,6 +1,7 @@
 package by.andrus.askit.controller;
 
 import by.andrus.askit.dto.QuestionDto;
+import by.andrus.askit.security.SecurityUser;
 import by.andrus.askit.service.QuestionService;
 import by.andrus.askit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -20,10 +23,13 @@ public class QuestionsController {
     @Autowired
     private UserService chatRoomService;
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @MessageMapping("/process-question")
     @SendTo("/topic/questions")
     public QuestionDto processQuestion(@Payload QuestionDto incomingQuestion) {
-        System.out.println("Got: " + incomingQuestion);
+        var principal = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(principal.getUsername() + " " + principal.getNickname() + " " + principal.getAuthorities());
+        System.out.println("Got: " + incomingQuestion.getText());
         return incomingQuestion;
     }
 

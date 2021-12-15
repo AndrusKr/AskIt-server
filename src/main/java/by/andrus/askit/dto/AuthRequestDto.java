@@ -21,7 +21,7 @@ public class AuthRequestDto {
         User user = new User();
         user.setNickname(nickname == null ? "Anonymous" : nickname);
         user.setJwtSecret(UUID.randomUUID());
-        user.setRole(Roles.ROLE_USER);
+        user.setRole(Roles.USER);
         user.setStatus(Status.ACTIVE);
         return user;
     }

@@ -24,7 +24,7 @@ public class Question {
     @Column(name = "last_edited_at", nullable = false)
     private Date last_edited_at;
 
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinColumn(name = "author", nullable = false)
     @JoinColumn(name = "author")
 //    private User author;

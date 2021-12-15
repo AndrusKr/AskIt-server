@@ -3,7 +3,6 @@ package by.andrus.askit.security.jwt;
 import by.andrus.askit.model.User;
 import by.andrus.askit.model.enums.Status;
 import by.andrus.askit.security.SecurityUser;
-import com.google.common.base.Strings;
 import com.google.common.io.BaseEncoding;
 import io.jsonwebtoken.*;
 import org.json.JSONObject;
@@ -14,11 +13,11 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.Optional;
 
 @Component
 public class JwtProvider {
-    public static final long EXPIRATION_TIME = 86_400_000; // 24 hours in millis.
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final long EXPIRATION_TIME = 86_400_000;
     public static final String HEADER_STRING = "Authorization";
 
     public String createJwt(User user) {
@@ -30,12 +29,9 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS256, user.getJwtSecret().toString().getBytes()).compact();
     }
 
-    public String resolveJwt(HttpServletRequest request) {
-//        StompHeaderAccessor accessor = StompHeaderAccessor.wrap((Message<?>) request);
-//        List tokenList = accessor.getNativeHeader("Authorization");
-        String jws = request.getHeader(HEADER_STRING);
-        return Strings.isNullOrEmpty(jws) || !jws.startsWith(TOKEN_PREFIX) ? null
-                : jws.replace(TOKEN_PREFIX, "");
+    public Optional<String> resolveJwt(HttpServletRequest request) {
+        String jwt = request.getHeader(HEADER_STRING);
+        return JwtUtils.getToken(jwt);
     }
 
     public Long getUserId(String jwt) {
