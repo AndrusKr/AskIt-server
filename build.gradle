@@ -6,7 +6,6 @@ plugins {
 
 group = 'by.andrus'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -23,7 +22,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-messaging'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "org.flywaydb:flyway-core:7.5.2"
+    implementation 'org.flywaydb:flyway-core:8.2.2'
     implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     implementation group: 'com.google.guava', name: 'guava', version: '29.0-jre'
     implementation group: 'org.json', name: 'json', version: '20200518'
