@@ -1,4 +1,4 @@
-package by.andrus.askit.dto;
+package by.andrus.askit.dto.response;
 
 public class AuthResponseDto {
     public String id;

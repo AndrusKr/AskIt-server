@@ -1,27 +1,11 @@
 package by.andrus.askit.dto;
 
 public class AuthorDto {
-    private String id;
-    private String nickname;
+    public String id;
+    public String nickname;
 
-    public AuthorDto(String id, String nickname) {
-        this.id = id;
-        this.nickname = nickname;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
+    public AuthorDto(Long id, String nickname) {
+        this.id = id.toString();
         this.nickname = nickname;
     }
 }

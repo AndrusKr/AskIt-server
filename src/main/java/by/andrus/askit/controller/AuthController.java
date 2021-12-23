@@ -1,7 +1,7 @@
 package by.andrus.askit.controller;
 
-import by.andrus.askit.dto.AuthRequestDto;
-import by.andrus.askit.dto.AuthResponseDto;
+import by.andrus.askit.dto.request.AuthRequestDto;
+import by.andrus.askit.dto.response.AuthResponseDto;
 import by.andrus.askit.model.User;
 import by.andrus.askit.security.SecurityUser;
 import by.andrus.askit.security.jwt.JwtProvider;

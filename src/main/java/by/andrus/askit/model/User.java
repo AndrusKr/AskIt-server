@@ -8,6 +8,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -32,6 +33,9 @@ public class User extends Auditable<Long> {
     @Type(type = "pgsql_enum")
     @Column(name = "user_role")
     private Roles roles;
+
+    @OneToMany(mappedBy = "author",fetch=FetchType.LAZY)
+    private List<Question> questions;
 
     public User() {
     }

@@ -1,36 +1,35 @@
 package by.andrus.askit.controller;
 
-import by.andrus.askit.dto.QuestionDto;
+import by.andrus.askit.dto.request.CreateQuestionRequestDto;
+import by.andrus.askit.dto.response.CreateQuestionResponseDto;
+import by.andrus.askit.model.Question;
 import by.andrus.askit.security.SecurityUser;
 import by.andrus.askit.service.QuestionService;
-import by.andrus.askit.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class QuestionsController {
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionsController.class);
 
     @Autowired
-    private SimpMessagingTemplate messagingTemplate;
-    @Autowired
     private QuestionService questionsService;
-    @Autowired
-    private UserService chatRoomService;
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @MessageMapping("/process-question")
     @SendTo("/topic/questions")
-    public QuestionDto processQuestion(@Payload QuestionDto incomingQuestion) {
+    public CreateQuestionResponseDto processQuestion(@Payload CreateQuestionRequestDto createQuestionRequestDto) {
         var principal = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println(principal.getUsername() + " " + principal.getNickname() + " " + principal.getAuthorities());
-        System.out.println("Got: " + incomingQuestion.getText());
-        return incomingQuestion;
+        LOG.info("User: {} sent QuestionRequestDto: {}", principal, createQuestionRequestDto);
+        Question createdQuestion = questionsService.create(createQuestionRequestDto.toQuestion(principal.getUsername()));
+        return CreateQuestionResponseDto.fromQuestion(createdQuestion);
     }
 
 //    @MessageMapping("/process-question")

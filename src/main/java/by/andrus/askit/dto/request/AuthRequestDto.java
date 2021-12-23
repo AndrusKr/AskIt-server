@@ -1,4 +1,4 @@
-package by.andrus.askit.dto;
+package by.andrus.askit.dto.request;
 
 import by.andrus.askit.model.User;
 import by.andrus.askit.model.enums.Roles;

@@ -1,37 +1,42 @@
 package by.andrus.askit.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Optional;
 import java.util.UUID;
 
 @Entity
 @Table(name = "questions")
 public class Question {
     @Id
-    @Column(name = "id", unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
+    @GeneratedValue(generator = "UUIDGenerator")
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
     @Column(name = "text", nullable = false)
     private String text;
 
     @Column(name = "answered")
-    private Date answered;
+    private Date answerTime;
 
     @Column(name = "asked", nullable = false)
-    private Date asked;
+    private Date askTime;
 
-    @Column(name = "last_edited_at", nullable = false)
-    private Date last_edited_at;
+    @Column(name = "last_edited_at")
+    private Date lastEditedAt;
 
-    //    @ManyToOne
-//    @JoinColumn(name = "author", nullable = false)
-    @JoinColumn(name = "author")
-//    private User author;
-    private UUID author;
+    @Column(name = "user_id")
+    private Long authorId;
 
-    public String getId() {
-        return id.toString();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    private User author;
+
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -46,35 +51,43 @@ public class Question {
         this.text = text;
     }
 
-    public Date getAnswered() {
-        return answered;
+    public Optional<Date> getAnswerTime() {
+        return Optional.ofNullable(answerTime);
     }
 
-    public void setAnswered(Date answered) {
-        this.answered = answered;
+    public void setAnswerTime(Date answered) {
+        this.answerTime = answered;
     }
 
-    public Date getAsked() {
-        return asked;
+    public Date getAskTime() {
+        return askTime;
     }
 
-    public void setAsked(Date asked) {
-        this.asked = asked;
+    public void setAskTime(Date asked) {
+        this.askTime = asked;
     }
 
-    public Date getLast_edited_at() {
-        return last_edited_at;
+    public Optional<Date> getLastEditedAt() {
+        return Optional.ofNullable(lastEditedAt);
     }
 
-    public void setLast_edited_at(Date last_edited_at) {
-        this.last_edited_at = last_edited_at;
+    public void setLastEditedAt(Date last_edited_at) {
+        this.lastEditedAt = last_edited_at;
     }
 
-    public UUID getAuthor() {
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UUID author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 }

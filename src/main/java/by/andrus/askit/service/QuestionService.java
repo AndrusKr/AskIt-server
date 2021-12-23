@@ -1,7 +1,8 @@
 package by.andrus.askit.service;
 
-import by.andrus.askit.dto.QuestionDto;
+import by.andrus.askit.dto.response.CreateQuestionResponseDto;
 import by.andrus.askit.model.Question;
+import by.andrus.askit.repository.QuestionsRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,11 +10,17 @@ import java.util.List;
 @Service
 public class QuestionService {
 
-    public QuestionDto create(Question incomingQuestion) {
-        return null;
+    private final QuestionsRepository questionsRepository;
+
+    public QuestionService(QuestionsRepository questionsRepository) {
+        this.questionsRepository = questionsRepository;
     }
 
-    public List<QuestionDto> findAll() {
+    public Question create(Question askedQuestion) {
+        return questionsRepository.save(askedQuestion);
+    }
+
+    public List<CreateQuestionResponseDto> findAll() {
         return null;
     }
 

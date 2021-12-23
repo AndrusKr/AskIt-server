@@ -10,14 +10,14 @@ import java.util.Set;
 import java.util.UUID;
 
 public class SecurityUser implements UserDetails {
-    private final String username;
+    private final String id;
     private final String nickname;
     private final String password;
     private final Set<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
     public SecurityUser(Long id, String nickname, UUID jwtSecret, Roles roles, boolean isActive) {
-        this.username = id.toString();
+        this.id = id.toString();
         this.nickname = nickname;
         this.password = jwtSecret.toString();
         this.authorities = roles.getAuthorities();
@@ -37,7 +37,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return id;
     }
 
     @Override
@@ -66,5 +66,16 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive;
+    }
+
+    @Override
+    public String toString() {
+        return "SecurityUser{" +
+                "id='" + id + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", authorities=" + authorities +
+                ", isActive=" + isActive +
+                '}';
     }
 }

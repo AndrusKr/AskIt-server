@@ -1,7 +1,7 @@
 package by.andrus.askit.service;
 
 import by.andrus.askit.model.User;
-import by.andrus.askit.repository.UserRepository;
+import by.andrus.askit.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,24 +9,24 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private final UsersRepository usersRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(UsersRepository usersRepository) {
+        this.usersRepository = usersRepository;
     }
 
     public User create(User user) {
-        User createdUser = userRepository.save(user);
+        User createdUser = usersRepository.save(user);
         return createdUser;
     }
 
     public User update(User user) {
-        User updatedUser = userRepository.save(user);
+        User updatedUser = usersRepository.save(user);
         return updatedUser;
     }
 
     public Optional<User> getById(Long id) {
-        return userRepository.findById(id);
+        return usersRepository.findById(id);
     }
 }
