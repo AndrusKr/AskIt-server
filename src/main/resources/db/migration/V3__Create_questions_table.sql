@@ -2,9 +2,9 @@ CREATE TABLE questions
 (
     id             uuid PRIMARY KEY            NOT NULL,
     text           VARCHAR(255)                NOT NULL,
-    answerTime     TIMESTAMP WITHOUT TIME ZONE NULL,
-    askTime        TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    answer_time    TIMESTAMP WITHOUT TIME ZONE NULL,
+    ask_time       TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     last_edited_at TIMESTAMP WITHOUT TIME ZONE NULL,
-    user_id        BIGINT                      NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    author_id        BIGINT                      NOT NULL,
+    FOREIGN KEY (author_id) REFERENCES users (id)
 );

@@ -1,6 +1,6 @@
 package by.andrus.askit.dto.response;
 
-import by.andrus.askit.dto.AuthorDto;
+import by.andrus.askit.dto.Author;
 import by.andrus.askit.model.Question;
 import by.andrus.askit.util.TimeUtil;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CreateQuestionResponseDto {
     private String id;
-    private AuthorDto authorDto;
+    private Author author;
     private String text;
     private String askTime;
     private int likes;
@@ -22,7 +22,7 @@ public class CreateQuestionResponseDto {
     public static CreateQuestionResponseDto fromQuestion(Question q) {
         CreateQuestionResponseDto qD = new CreateQuestionResponseDto();
         qD.setId(q.getId().toString());
-        qD.setAuthorDto(new AuthorDto(q.getAuthorId(), q.getAuthor().getNickname()));
+        qD.setAuthorDto(new Author(q.getAuthor().getId(), q.getAuthor().getNickname()));
         qD.setText(q.getText());
         qD.setAskTime(TimeUtil.toIsoString(q.getAskTime()));
         qD.setLikes(new ArrayList<>());
@@ -35,8 +35,8 @@ public class CreateQuestionResponseDto {
         return id;
     }
 
-    public AuthorDto getAuthorDto() {
-        return authorDto;
+    public Author getAuthorDto() {
+        return author;
     }
 
     public String getText() {
@@ -63,8 +63,8 @@ public class CreateQuestionResponseDto {
         this.id = id;
     }
 
-    public void setAuthorDto(AuthorDto authorDto) {
-        this.authorDto = authorDto;
+    public void setAuthorDto(Author author) {
+        this.author = author;
     }
 
     public void setText(String text) {

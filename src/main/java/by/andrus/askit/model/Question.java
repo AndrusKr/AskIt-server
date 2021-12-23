@@ -34,11 +34,7 @@ public class Question {
     @Column(name = "last_edited_at")
     private Date lastEditedAt;
 
-    @Column(name = "user_id")
-    private Long authorId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User author;
 
     public UUID getId() {
@@ -81,19 +77,11 @@ public class Question {
         this.lastEditedAt = last_edited_at;
     }
 
-    public Long getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
-    }
-
     public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(User author) {
-        this.author = author;
+    public void setAuthor(User user) {
+        this.author = user;
     }
 }
