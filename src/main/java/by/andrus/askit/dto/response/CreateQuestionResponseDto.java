@@ -3,13 +3,15 @@ package by.andrus.askit.dto.response;
 import by.andrus.askit.dto.Author;
 import by.andrus.askit.model.Question;
 import by.andrus.askit.util.TimeUtil;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateQuestionResponseDto {
     private String id;
-    private Author author;
+    @JsonProperty("author")
+    private AuthorDto authorDto;
     private String text;
     private String askTime;
     private int likes;
@@ -63,8 +65,8 @@ public class CreateQuestionResponseDto {
         this.id = id;
     }
 
-    public void setAuthorDto(Author author) {
-        this.author = author;
+    public void setAuthorDto(AuthorDto authorDto) {
+        this.authorDto = authorDto;
     }
 
     public void setText(String text) {
