@@ -29,6 +29,7 @@ public class QuestionService {
         mayBeAuthor.ifPresent(askedQuestion::setAuthor);
         askedQuestion.setText(dto.getText());
         askedQuestion.setAskTime(TimeUtil.toDate(dto.getAskTime()));
+        askedQuestion.setLikes(List.of());
         return questionsRepository.save(askedQuestion);
     }
 
