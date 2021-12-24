@@ -14,7 +14,7 @@ public class CreateQuestionRequestDto {
 
     @Override
     public String toString() {
-        return "CreateQuestionRequestDto{" +
+        return this.getClass().getSimpleName() + "{" +
                 "text='" + text + '\'' +
                 ", askTime='" + askTime + '\'' +
                 '}';

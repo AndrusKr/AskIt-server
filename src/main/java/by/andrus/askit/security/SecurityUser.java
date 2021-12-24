@@ -70,7 +70,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public String toString() {
-        return "SecurityUser{" +
+        return this.getClass().getSimpleName() + "{" +
                 "id='" + id + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
