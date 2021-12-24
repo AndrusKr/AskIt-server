@@ -27,7 +27,7 @@ public class QuestionsController {
     @SendTo("/topic/questions")
     public CreateQuestionResponseDto processQuestion(@Payload CreateQuestionRequestDto createQuestionRequestDto) {
         var principal = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        LOG.info("User: {} sent QuestionRequestDto: {}", principal, createQuestionRequestDto);
+        LOG.info("{} sent {}", principal, createQuestionRequestDto);
         Question createdQuestion = questionsService.create(createQuestionRequestDto, principal.getUsername());
         return CreateQuestionResponseDto.fromQuestion(createdQuestion);
     }
