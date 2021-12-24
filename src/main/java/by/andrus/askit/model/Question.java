@@ -1,17 +1,22 @@
 package by.andrus.askit.model;
 
+import by.andrus.askit.model.embeddable.LikeId;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "questions")
@@ -36,6 +41,9 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User author;
+
+    @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    private List<Like> likes;
 
     public UUID getId() {
         return id;
@@ -83,5 +91,17 @@ public class Question {
 
     public void setAuthor(User user) {
         this.author = user;
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public List<Long> getLikedUserIds() {
+        return likes.stream().map(Like::getId).map(LikeId::getUserId).collect(Collectors.toList());
     }
 }
