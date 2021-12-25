@@ -1,6 +1,7 @@
 package by.andrus.askit.model;
 
 import by.andrus.askit.model.embeddable.LikeId;
+import lombok.Builder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.CascadeType;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "questions")
+@Builder
 public class Question {
     @Id
     @GenericGenerator(name = "UUIDGenerator", strategy = "uuid2")
@@ -46,6 +48,9 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Like> likes;
+
+    public Question() {
+    }
 
     public UUID getId() {
         return id;

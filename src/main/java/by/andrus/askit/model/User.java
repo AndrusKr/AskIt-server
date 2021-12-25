@@ -4,6 +4,7 @@ import by.andrus.askit.model.abstracts.Auditable;
 import by.andrus.askit.model.enums.Roles;
 import by.andrus.askit.model.enums.Status;
 import by.andrus.askit.model.types.PostgreSQLEnumType;
+import lombok.Builder;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -25,6 +26,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @TypeDef(name = "pgsql_enum", typeClass = PostgreSQLEnumType.class)
+@Builder
 public class User extends Auditable<Long> {
     @Id
     @Column(name = "id", unique = true)
@@ -51,6 +53,16 @@ public class User extends Auditable<Long> {
     private List<Like> likes;
 
     public User() {
+    }
+
+    public User(Long id, String nickname, UUID jwtSecret, Status status, Roles roles, List<Question> questions, List<Like> likes) {
+        this.id = id;
+        this.nickname = nickname;
+        this.jwtSecret = jwtSecret;
+        this.status = status;
+        this.roles = roles;
+        this.questions = questions;
+        this.likes = likes;
     }
 
     public Long getId() {

@@ -1,6 +1,7 @@
 package by.andrus.askit.model;
 
 import by.andrus.askit.model.embeddable.LikeId;
+import lombok.Builder;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -13,6 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "likes")
+@Builder
 public class Like {
 
     @EmbeddedId
@@ -30,6 +32,16 @@ public class Like {
 
     @Column(name = "created_at")
     private Date createdAt;
+
+    public Like() {
+    }
+
+    public Like(LikeId id, User user, Question question, Date createdAt) {
+        this.id = id;
+        this.user = user;
+        this.question = question;
+        this.createdAt = createdAt;
+    }
 
     public LikeId getId() {
         return id;
