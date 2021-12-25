@@ -17,13 +17,11 @@ public class UserService {
     }
 
     public User create(User user) {
-        User createdUser = usersRepository.save(user);
-        return createdUser;
+        return usersRepository.save(user);
     }
 
     public User update(User user) {
-        User updatedUser = usersRepository.save(user);
-        return updatedUser;
+        return usersRepository.save(user);
     }
 
     public Optional<User> getById(Long id) {
