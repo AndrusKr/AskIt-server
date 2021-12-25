@@ -16,21 +16,11 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionsRepository questionsRepository;
-    private final UsersRepository usersRepository;
+    private final SecurityContextHolderService securityContextHolderService;
 
-    public QuestionService(QuestionsRepository questionsRepository, UsersRepository usersRepository) {
+    public QuestionService(QuestionsRepository questionsRepository, SecurityContextHolderService securityContextHolderService) {
         this.questionsRepository = questionsRepository;
-        this.usersRepository = usersRepository;
-    }
-
-    public Question create(CreateQuestionRequestDto dto, String authorId) {
-        Question askedQuestion = new Question();
-        Optional<User> mayBeAuthor = usersRepository.findById(Long.valueOf(authorId));
-        mayBeAuthor.ifPresent(askedQuestion::setAuthor);
-        askedQuestion.setText(dto.getText());
-        askedQuestion.setAskTime(TimeUtil.toDate(dto.getAskTime()));
-        askedQuestion.setLikes(List.of());
-        return questionsRepository.save(askedQuestion);
+        this.securityContextHolderService = securityContextHolderService;
     }
 
     public List<CreateQuestionResponseDto> findAll() {
