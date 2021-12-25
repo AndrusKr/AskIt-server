@@ -6,7 +6,7 @@ import by.andrus.askit.model.enums.Status;
 
 import java.util.UUID;
 
-public class AuthRequestDto {
+public class AuthRequest {
     public String nickname;
 
     public String getNickname() {

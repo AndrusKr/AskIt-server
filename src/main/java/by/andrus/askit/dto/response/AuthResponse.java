@@ -1,11 +1,11 @@
 package by.andrus.askit.dto.response;
 
-public class AuthResponseDto {
+public class AuthResponse {
     public String id;
     public String nickname;
     public String jwt;
 
-    public AuthResponseDto(Long id, String nickname, String jwt) {
+    public AuthResponse(Long id, String nickname, String jwt) {
         this.id = id.toString();
         this.nickname = nickname;
         this.jwt = jwt;

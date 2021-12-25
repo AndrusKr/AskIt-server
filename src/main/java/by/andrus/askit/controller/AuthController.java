@@ -1,7 +1,7 @@
 package by.andrus.askit.controller;
 
-import by.andrus.askit.dto.request.AuthRequestDto;
-import by.andrus.askit.dto.response.AuthResponseDto;
+import by.andrus.askit.dto.request.AuthRequest;
+import by.andrus.askit.dto.response.AuthResponse;
 import by.andrus.askit.model.User;
 import by.andrus.askit.security.SecurityUser;
 import by.andrus.askit.security.jwt.JwtProvider;
@@ -34,12 +34,12 @@ public class AuthController {
     }
 
     @PostMapping("sign-up")
-    public ResponseEntity<AuthResponseDto> signUp(@RequestBody AuthRequestDto authRequestDto) {
-        User user = userService.create(authRequestDto.toUser());
+    public ResponseEntity<AuthResponse> signUp(@RequestBody AuthRequest authRequest) {
+        User user = userService.create(authRequest.toUser());
         System.out.println("user-print " + user);
         String jwt = jwtProvider.createJwt(user);
         System.out.println("jwt-print " + jwt);
-        return ResponseEntity.ok(new AuthResponseDto(user.getId(), user.getNickname(), jwt));
+        return ResponseEntity.ok(new AuthResponse(user.getId(), user.getNickname(), jwt));
     }
 
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")

@@ -1,6 +1,6 @@
 package by.andrus.askit.dto.request;
 
-public class CreateQuestionRequestDto {
+public class CreateQuestionRequest {
     private String text;
     private String askTime;
 

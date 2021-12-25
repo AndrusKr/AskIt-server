@@ -1,4 +1,4 @@
-package by.andrus.askit.dto.response;
+package by.andrus.askit.dto.response.payload;
 
 import by.andrus.askit.dto.AuthorDto;
 import by.andrus.askit.model.Question;
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class CreateQuestionResponseDto {
+public class CreateQuestionPayload {
     private String id;
     private String text;
     private String askTime;
@@ -17,11 +17,11 @@ public class CreateQuestionResponseDto {
     @JsonProperty("author")
     private AuthorDto authorDto;
 
-    public CreateQuestionResponseDto() {
+    public CreateQuestionPayload() {
     }
 
-    public static CreateQuestionResponseDto fromQuestion(Question q) {
-        CreateQuestionResponseDto qD = new CreateQuestionResponseDto();
+    public static CreateQuestionPayload fromQuestion(Question q) {
+        CreateQuestionPayload qD = new CreateQuestionPayload();
         qD.setId(q.getId().toString());
         qD.setAuthorDto(new AuthorDto(q.getAuthor().getId(), q.getAuthor().getNickname()));
         qD.setText(q.getText());
