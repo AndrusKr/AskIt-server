@@ -14,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
 import static by.andrus.askit.dto.response.QuestionOperationType.CREATE;
+import static by.andrus.askit.dto.response.QuestionOperationType.READ_ALL;
 
 @Controller
 @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -33,12 +34,12 @@ public class QuestionsController {
         return new OpResponse(CREATE, QuestionPayload.from(createdQuestion));
     }
 
-//    @PreAuthorize("hasAuthority('ALL_QUESTIONS_READ')")
-//    @MessageMapping("/questions/get")
-//    public List<CreateQuestionPayload> getAll() {
-//        return questionsService.findAll();
-//    }
-//
+    @PreAuthorize("hasAuthority('ALL_QUESTIONS_READ')")
+    @MessageMapping("/questions/get")
+    public OpResponse getAll() {
+        return new OpResponse(READ_ALL, QuestionPayload.from(questionsService.findAll()));
+    }
+
 //    @PreAuthorize("hasAuthority('ALL_QUESTIONS_UPDATE') or #question.getAuthor() == principal.id")
 //    @MessageMapping("/questions/update")
 //    public OpResponse update(UpdateQuestionRequest questionDto) {

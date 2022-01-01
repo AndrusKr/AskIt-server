@@ -37,4 +37,26 @@ public class QuestionService {
         );
     }
 
+    public List<Question> findAll() {
+        LOG.info("Finding all quesitons");
+        return questionsRepository.findAll();
+    }
+
+//    public Question update(UpdateQuestionRequest dto) throws IllegalArgumentException {
+//        LOG.info("Updating question with ID {}", dto.getId());
+//        Optional<Question> mayBeUpdateQuestion = questionsRepository.findById(UUID.fromString(dto.getId()));
+//        Question changedQuestion = mayBeUpdateQuestion
+//                .map(q -> {
+//                    q.setText(dto.getText());
+//                    q.setLastEditedAt(TimeUtil.toDate(dto.getLastEditedAt()));
+//                    return q;
+//                })
+//                .orElseThrow(() -> new IllegalArgumentException(String.format("There is no question with ID %s", dto.getId())));
+//        return questionsRepository.save(changedQuestion);
+//    }
+//
+//    public void delete(UUID id) {
+//        LOG.info("Deleting question with ID {}", id);
+//        questionsRepository.deleteById(id);
+//    }
 }
