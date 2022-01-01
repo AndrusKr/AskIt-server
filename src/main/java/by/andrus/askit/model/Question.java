@@ -33,6 +33,9 @@ public class Question {
     @Column(name = "text", nullable = false)
     private String text;
 
+    @Column(name = "is_pinned", nullable = false)
+    private Boolean isPinned;
+
     @Column(name = "answered")
     private Date answerTime;
 
@@ -52,6 +55,17 @@ public class Question {
     public Question() {
     }
 
+    public Question(UUID id, String text, Boolean isPinned, Date answerTime, Date askTime, Date lastEditedAt, User author, List<Like> likes) {
+        this.id = id;
+        this.text = text;
+        this.isPinned = isPinned;
+        this.answerTime = answerTime;
+        this.askTime = askTime;
+        this.lastEditedAt = lastEditedAt;
+        this.author = author;
+        this.likes = likes;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -66,6 +80,14 @@ public class Question {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Boolean getIsPinned() {
+        return isPinned;
+    }
+
+    public void setIsPinned(Boolean isPinned) {
+        this.isPinned = isPinned;
     }
 
     public Optional<Date> getAnswerTime() {

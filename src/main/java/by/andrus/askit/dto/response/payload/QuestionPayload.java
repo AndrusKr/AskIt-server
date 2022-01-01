@@ -6,10 +6,12 @@ import by.andrus.askit.util.TimeUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class CreateQuestionPayload {
+public class QuestionPayload {
     private String id;
     private String text;
+    private Boolean isPinned;
     private String askTime;
     private String answerTime;
     private String lastEditedAt;
@@ -17,14 +19,19 @@ public class CreateQuestionPayload {
     @JsonProperty("author")
     private AuthorDto authorDto;
 
-    public CreateQuestionPayload() {
+    public QuestionPayload() {
     }
 
-    public static CreateQuestionPayload fromQuestion(Question q) {
-        CreateQuestionPayload qD = new CreateQuestionPayload();
+    public static List<QuestionPayload> from(List<Question> questions) {
+        return questions.stream().map(QuestionPayload::from).collect(Collectors.toList());
+    }
+
+    public static QuestionPayload from(Question q) {
+        QuestionPayload qD = new QuestionPayload();
         qD.setId(q.getId().toString());
         qD.setAuthorDto(new AuthorDto(q.getAuthor().getId(), q.getAuthor().getNickname()));
         qD.setText(q.getText());
+        qD.setIsPinned(q.getIsPinned());
         qD.setAskTime(TimeUtil.toIsoString(q.getAskTime()));
         qD.setLikedUserIds(q.getLikedUserIds());
         q.getAnswerTime().ifPresent(t -> qD.setAnswerTime(TimeUtil.toIsoString(t)));
@@ -36,20 +43,16 @@ public class CreateQuestionPayload {
         return id;
     }
 
-    public AuthorDto getAuthorDto() {
-        return authorDto;
-    }
-
     public String getText() {
         return text;
     }
 
-    public String getAskTime() {
-        return askTime;
+    public Boolean getPinned() {
+        return isPinned;
     }
 
-    public List<Long> getLikedUserIds() {
-        return likedUserIds;
+    public String getAskTime() {
+        return askTime;
     }
 
     public String getAnswerTime() {
@@ -58,6 +61,14 @@ public class CreateQuestionPayload {
 
     public String getLastEditedAt() {
         return lastEditedAt;
+    }
+
+    public List<Long> getLikedUserIds() {
+        return likedUserIds;
+    }
+
+    public AuthorDto getAuthorDto() {
+        return authorDto;
     }
 
     public void setId(String id) {
@@ -70,6 +81,10 @@ public class CreateQuestionPayload {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setIsPinned(Boolean pinned) {
+        isPinned = pinned;
     }
 
     public void setAskTime(String askTime) {
@@ -87,4 +102,5 @@ public class CreateQuestionPayload {
     public void setEdited(String lastEditedAt) {
         this.lastEditedAt = lastEditedAt;
     }
+
 }

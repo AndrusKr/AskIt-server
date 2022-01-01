@@ -35,12 +35,15 @@ public class User extends Auditable<Long> {
 
     @Column(name = "nickname", nullable = false)
     private String nickname;
+
     @Column(name = "jwt_secret", nullable = false)
     private UUID jwtSecret;
+
     @Enumerated(EnumType.STRING)
     @Type(type = "pgsql_enum")
     @Column(name = "user_status")
     private Status status;
+
     @Enumerated(EnumType.STRING)
     @Type(type = "pgsql_enum")
     @Column(name = "user_role")
@@ -132,5 +135,18 @@ public class User extends Auditable<Long> {
     @Override
     public int hashCode() {
         return Objects.hash(id, nickname, jwtSecret, status, roles);
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", jwtSecret=" + jwtSecret +
+                ", status=" + status +
+                ", roles=" + roles +
+                ", questions=" + questions +
+                ", likes=" + likes +
+                '}';
     }
 }
